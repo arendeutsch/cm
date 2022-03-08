@@ -7,7 +7,16 @@
       <h2>Carb Manager Dev Assignment</h2>
       <div class="recipes-container">
         <div v-for="recipe in recipes" :key="recipe.id">
-          <PremiumRecipeCard :recipe="recipe" :user="user" />
+          <PremiumRecipeCard
+            v-if="!showRecipeOfTheday"
+            :recipe="recipe"
+            :user="user"
+          />
+          <RecipeOfTheDay
+            v-if="showRecipeOfTheday"
+            :recipe="recipe"
+            :user="user"
+          />
         </div>
       </div>
     </div>
@@ -15,18 +24,21 @@
 </template>
 
 <script>
-import PremiumRecipeCard from "./components/PremiumRecipeCard.vue";
+import PremiumRecipeCard from "./components/PremiumRecipeCard/PremiumRecipeCard.vue";
+import RecipeOfTheDay from "./components/RecipeOfTheDay/RecipeOfTheDay.vue";
 
 export default {
   name: "App",
 
   components: {
-    PremiumRecipeCard
+    PremiumRecipeCard,
+    RecipeOfTheDay
   },
 
   data: () => ({
     recipes: [],
-    user: {}
+    user: {},
+    showRecipeOfTheday: true
   }),
 
   async mounted() {
